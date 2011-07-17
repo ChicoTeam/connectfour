@@ -16,7 +16,7 @@ var game = {
         
         var ai_options = {
             game_dimensions : this.dimensions,
-            difficulty : 'easy'
+            difficulty : 'medium'
         };
         ai.init(ai_options);
     },
