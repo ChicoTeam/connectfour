@@ -6,6 +6,7 @@ var game = {
         this.reset();
         this.last_play = undefined;
         this.turn = 'black';
+        this.turn_player = 1;
         this.winning = '';
         this.winning_pieces = [];
         
@@ -30,13 +31,20 @@ var game = {
     },
 
     toggle_turn: function() {
-        if (this.turn == 'black')
+        if (this.turn_player == 1) {
+            this.turn_player = 2;
             this.turn = 'red';
-        else
+        }
+        else {
+            this.turn_player = 1;
             this.turn = 'black';
+        }
         
+        if(Math.floor(Math.random() * 11) == 1) {
+            this.turn = 'green';
+        }
         
-        if (board.player_two == 'Computer' && this.turn == 'red') {
+        if (board.player_two == 'Computer' && this.turn_player == 2) {
             board.set_disabled(true);
             window.setTimeout(function(){
                 board.set_disabled(false);
