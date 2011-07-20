@@ -8,8 +8,36 @@ var board = {
 
     dimensions: function() {
         /// Simply grabs the initial col/rows of the board
-        var cols = parseInt(this.container.attr('cols'));
-        var rows  = parseInt(this.container.attr('rows'));
+        
+        //var cols = parseInt(this.container.attr('cols'));
+        //var rows  = parseInt(this.container.attr('rows'));
+        
+	var cols ="";
+	var rows ="";
+	var selector = $("#boardSelector option:selected").val();
+	
+        switch(selector)
+	{
+	  case "7x6":
+	    cols = '7';
+	    rows = '6';
+	    break;
+	  case "8x7":
+	    cols = '8';
+	    rows = '7';
+	    break;
+	  case "9x7":
+	    cols = '9';
+	    rows = '7';
+	    break;
+	  case "10x7":
+	    cols = '10';
+	    rows = '7';
+	    break;
+	  default:
+	    "shit's broke";
+	    break;
+	}
         var length = cols * rows;
         return {'cols': cols, 'rows': rows, 'length': length};
     },
@@ -69,7 +97,7 @@ var layout = {
         else {
             var winner_name = board.player_two;
         }
-        if (game.winning != '') {
+        if (game.winning != undefined && game.winning != '') {
             $("<div title='New game?'><p>"+winner_name+" won! Play again?</p></div>").dialog({ buttons: [
                 {
                     text: "Ok",
@@ -89,10 +117,7 @@ var layout = {
 
 // Start by initializing the board layout
 $(document).ready(function() {
-    board.init();
-    game.init(board.dimensions);
     layout.prompt();
-
     // Handle modal closes
     $("a.close").click(function() {
         $("#modal").fadeOut();
@@ -100,6 +125,8 @@ $(document).ready(function() {
     });
     
     $('#modal input[type="button"]').click(function(){
+	board.init();
+	game.init(board.dimensions);
         board.get_players();
         $("a.close").click();
     });
